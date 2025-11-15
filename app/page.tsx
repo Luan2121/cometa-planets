@@ -1,41 +1,38 @@
 "use client"
+
+import { LoadMoreButton } from "@/components/load-more-button";
 import PlanetsTable from "@/components/planets-table";
-import PlanetsTablet from "@/components/planets-table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import Footer from "@/components/ui/footer";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useCelestialBodies } from "@/hooks/use-celestial-bodies";
-import { formatDiameter, formatPopulation, planetHasWater } from "@/utils/planets";
-import { RotateCw } from "lucide-react";
 
 export default function Home() {
 
   const { 
     data : planets,
-    fetchNextPage 
+    fetchNextPage,
+    isFetching
   } = useCelestialBodies()
   
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      <h2 className="text-2xl font-bold">
+      <h2 className="text-2xl font-bold mb-4">
         Planetas y cuerpos celestes
       </h2>
-      <div className="w-full min-h-0 overflow-y-scroll">
+      <div className="w-full min-h-0 flex mb-4">
         <PlanetsTable 
           headers={headers}
           planets={planets}
         />
       </div>
-
-      <Button
-        variant="outline"
-        onClick={() => fetchNextPage()}
-      >
-        <RotateCw />
-        Cargar Mas
-      </Button>
+      <div className="text-center">
+        <LoadMoreButton
+          variant="outline"
+          onClick={() => fetchNextPage()}
+          isLoading={isFetching}
+          disabled={isFetching}
+        >
+          Cargar Mas
+        </LoadMoreButton>
+      </div>
     </div>
   );
 }

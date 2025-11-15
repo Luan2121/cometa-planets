@@ -18,10 +18,10 @@ function PlanetsTable({
   planets
 } : PlanetsTabletProps) {
   return (
-    <Table>
+    <Table className="relative">
       <TableHeader>
-        <TableRow>
-          <TableHead>
+        <TableRow className="sticky top-0 bg-[#FFF] z-10">
+          <TableHead className="text-xs text-muted-foreground">
             <Checkbox />
           </TableHead>
           {headers.map( (header,index) => (
