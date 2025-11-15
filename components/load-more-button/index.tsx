@@ -12,8 +12,8 @@ export function LoadMoreButton({
       {...props}
     >
       {isLoading
-        ? <Spinner />
-        : <RotateCw />
+        ? <Spinner data-testid = "spinner"/>
+        : <RotateCw data-testid = "rotate-icon"/>
       }
       {children}
     </Button>

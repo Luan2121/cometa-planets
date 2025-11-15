@@ -1,49 +1,11 @@
-"use client"
+import { PlanetsView } from "@/components/planets-view";
+import { fetchPlanets } from "@/lib/celestial-bodies";
 
-import { LoadMoreButton } from "@/components/load-more-button";
-import PlanetsTable from "@/components/planets-table";
-import { useCelestialBodies } from "@/hooks/use-celestial-bodies";
-
-export default function Home() {
-
-  const { 
-    data : planets,
-    fetchNextPage,
-    isFetching
-  } = useCelestialBodies()
-  
+export default async function Home() {
+  const planets = await fetchPlanets({ pageParam: "" })
   return (
-    <div className="flex flex-col flex-1 min-h-0">
-      <h2 className="text-2xl font-bold mb-4">
-        Planetas y cuerpos celestes
-      </h2>
-      <div className="w-full min-h-0 flex mb-4">
-        <PlanetsTable 
-          headers={headers}
-          planets={planets}
-        />
-      </div>
-      <div className="text-center">
-        <LoadMoreButton
-          variant="outline"
-          onClick={() => fetchNextPage()}
-          isLoading={isFetching}
-          disabled={isFetching}
-        >
-          Cargar Mas
-        </LoadMoreButton>
-      </div>
-    </div>
-  );
+    <PlanetsView 
+      planets={planets}
+    />
+  )
 }
-
-const headers = [
-  { title: "Nombre" },
-  { title: "Clima" },
-  { title: "Terreno" },
-  { title: "Gravedad" },
-  { title: "Diámetro (km)" },
-  { title: "Período de rotación" },
-  { title: "Agua superficial" },
-  { title: "Población" }
-];

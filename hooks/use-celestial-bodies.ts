@@ -1,11 +1,16 @@
 import { QueryKeys } from "@/constants/query-keys"
-import { fetchPlanets } from "@/lib/celestial-bodies"
+import { fetchPlanets, Planet } from "@/lib/celestial-bodies"
+import { PaginatedQuery } from "@/types/commons"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 export const useCelestialBodies = (params ?: UseCelestialBodiesParams) => {
   return useInfiniteQuery({
     queryKey: QueryKeys.celestialBodies(),
     queryFn: fetchPlanets,
+    initialData: {
+      pages: [params?.initialData],
+      pageParams: [""]
+    },
     initialPageParam: "",
     getNextPageParam: (lastPage) => {
       if(!lastPage?.next) return undefined
@@ -19,5 +24,5 @@ export const useCelestialBodies = (params ?: UseCelestialBodiesParams) => {
 }
 
 export interface UseCelestialBodiesParams {
-  page: number
+  initialData: PaginatedQuery<Planet[]> | null
 }

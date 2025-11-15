@@ -83,7 +83,7 @@ function PlanetsTable({
 
 export interface PlanetsTabletProps {
   headers: ITableHeader[],
-  planets: InfiniteData<PaginatedQuery<Planet[]> | null> | null | undefined
+  planets: InfiniteData<PaginatedQuery<Planet[]> | null | undefined> | null | undefined
 }
 
 export default PlanetsTable
