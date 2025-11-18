@@ -2,7 +2,7 @@ import { QueryKeys } from "@/constants/query-keys"
 import { fetchPlanets, Planet } from "@/lib/celestial-bodies"
 import { PaginatedQuery } from "@/types/commons"
 import { round } from "@/utils/planets"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query"
 
 export const useCelestialBodies = (params ?: UseCelestialBodiesParams) => {
   return useInfiniteQuery({
@@ -13,6 +13,7 @@ export const useCelestialBodies = (params ?: UseCelestialBodiesParams) => {
       pageParams: [""]
     },
     initialPageParam: "",
+    placeholderData: keepPreviousData,
     getNextPageParam: (lastPage) => {
       if(!lastPage?.next) return undefined
       return lastPage.next

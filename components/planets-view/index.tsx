@@ -5,6 +5,7 @@ import PlanetsTable from "@/components/planets-table";
 import { useCelestialBodies } from "@/hooks/use-celestial-bodies";
 import { Planet } from "@/lib/celestial-bodies";
 import { PaginatedQuery } from "@/types/commons";
+import { PlanetsEmptyState } from "../planets-empty-state";
 
 export function PlanetsView({
   planets : initialPlanets
@@ -24,26 +25,34 @@ export function PlanetsView({
         Planetas y cuerpos celestes
       </h2>
       <div className="w-full min-h-0 flex mb-4">
-        <PlanetsTable 
-          headers={headers}
-          planets={planets}
-        />
+        {planets.pages.length 
+          ? (
+            <PlanetsTable 
+              headers={headers}
+              planets={planets}
+            />            
+          ) : ( 
+            <PlanetsEmptyState />
+          )
+        }
       </div>
       <div className="flex justify-end text-xs pr-4">
-         <b>
+         <b className="mr-1">
           Población Total:
-         </b> {totalPopulation}
+         </b> {'  '} {totalPopulation} 
       </div>
-      <div className="text-center">
-        <LoadMoreButton
-          variant="outline"
-          onClick={() => fetchNextPage()}
-          isLoading={isFetching}
-          disabled={isFetching}
-        >
-          Cargar Mas
-        </LoadMoreButton>
-      </div>
+      {planets.pages.length && (
+        <div className="text-center">
+          <LoadMoreButton
+            variant="outline"
+            onClick={() => fetchNextPage()}
+            isLoading={isFetching}
+            disabled={isFetching}
+          >
+            Cargar Mas
+          </LoadMoreButton>
+        </div>
+      )}
     </div>
   );
 }
