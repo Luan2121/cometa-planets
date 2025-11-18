@@ -11,7 +11,7 @@ export function PlanetsView({
 } : PlanetsViewProps) {
 
   const { 
-    data : planets,
+    data : { planets, totalPopulation },
     fetchNextPage,
     isFetching
   } = useCelestialBodies({
@@ -28,6 +28,11 @@ export function PlanetsView({
           headers={headers}
           planets={planets}
         />
+      </div>
+      <div className="flex justify-end text-xs pr-4">
+         <b>
+          Población Total:
+         </b> {totalPopulation}
       </div>
       <div className="text-center">
         <LoadMoreButton
@@ -51,7 +56,9 @@ const headers = [
   { title: "Diámetro (km)" },
   { title: "Período de rotación" },
   { title: "Agua superficial" },
-  { title: "Población" }
+  { title: "Población" },
+  { title: "Residentes" },
+  { title: "Películas"}
 ];
 
 export interface PlanetsViewProps {

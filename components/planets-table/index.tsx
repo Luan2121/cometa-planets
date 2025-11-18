@@ -72,6 +72,12 @@ function PlanetsTable({
                   <TableCell>
                     {formatPopulation(planet.population)}
                   </TableCell>
+                  <TableCell>
+                    {planet.residents.length}
+                  </TableCell>
+                  <TableCell>
+                    {planet.films.length}
+                  </TableCell>
                 </TableRow>
               )
             })

@@ -1,6 +1,7 @@
 import { QueryKeys } from "@/constants/query-keys"
 import { fetchPlanets, Planet } from "@/lib/celestial-bodies"
 import { PaginatedQuery } from "@/types/commons"
+import { round } from "@/utils/planets"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 export const useCelestialBodies = (params ?: UseCelestialBodiesParams) => {
@@ -19,6 +20,18 @@ export const useCelestialBodies = (params ?: UseCelestialBodiesParams) => {
     getPreviousPageParam: (lastPage) => {
       if(!lastPage?.previous) return undefined
       return lastPage.previous
+    },
+    select: (groups) => {
+      const totalPopulation = groups.pages.reduce( (accum : number, page) => {
+        const populationForPage = page?.results.reduce(( accum, planet) => {
+          return accum + round(planet.population)
+        },0) ?? 0
+        return accum + populationForPage
+      },0)
+      return {
+        planets: groups,
+        totalPopulation: totalPopulation.toLocaleString("en-US")
+      }
     }
   })
 }
